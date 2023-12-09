@@ -100,7 +100,7 @@ public class MiniCAD extends JFrame {
     private int traslacionY;
 
     public MiniCAD() {
-        super("2D");
+        super("Mini CAD :p");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(750, 500);
         nodos = new ArrayList<>();
@@ -176,6 +176,7 @@ public class MiniCAD extends JFrame {
     }
 
     private void trasladarFigura() {
+        conexiones.clear();
         int desplazamientoX = 10; // Puedes ajustar el desplazamiento según tus necesidades
         int desplazamientoY = 10;
 
@@ -291,7 +292,7 @@ private void imprimirCoordenadas() {
     }
 
     private void dibujarConexiones(Graphics g) {
-        g.setColor(Color.BLACK);
+        g.setColor(Color.GREEN);
         for (int i = 1; i < conexiones.size(); i += 2) {
             Point punto1 = conexiones.get(i - 1);
             Point punto2 = conexiones.get(i);

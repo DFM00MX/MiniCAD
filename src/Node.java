@@ -10,7 +10,7 @@ class Node {
     }
 
     public void dibujar(Graphics g) {
-        g.setColor(Color.BLUE);
-        g.fillOval(x - 5, y - 5, 20, 20);
+        g.setColor(Color.GREEN);
+        g.fillOval(x - 5, y - 5, 10, 10);
     }
 }
