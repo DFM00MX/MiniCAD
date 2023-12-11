@@ -1,92 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-
-/*public class MiniCAD extends JFrame {
-    private List<Node> nodos;
-    private List<Point> conexiones;
-    private boolean uniendo;
-    public MiniCAD() {
-        super("2D");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(750, 500);
-        nodos = new ArrayList<>();
-        conexiones = new ArrayList<>();
-        uniendo = false;
-        JPanel panel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                dibujarNodos(g);
-                dibujarConexiones(g);
-            }
-        };
-
-        panel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if (!uniendo) {
-                    nodos.add(new Node(e.getX(), e.getY()));
-                    panel.repaint();
-                }
-            }
-        });
-        JButton botonAgrandar = new JButton("Aumentar Figura");
-        botonAgrandar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                agrandarFigura();
-                getContentPane().repaint();
-            }
-        });
-        JButton botonAchicar = new JButton("Reducir Figura");
-        botonAchicar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                achicarFigura();
-                getContentPane().repaint();
-            }
-        });
-        JButton botonRotar = new JButton("Rotar Figura");
-        botonRotar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                rotarFigura();
-                getContentPane().repaint();
-            }
-        });
-
-        JButton botonUnion = new JButton("Crear Figura");
-        botonUnion.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                uniendo = true;
-                conectarNodos();
-                panel.repaint();
-            }
-        });
-        JPanel botonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
-        botonPanel.add(botonUnion);
-        botonPanel.add(botonAchicar);
-        botonPanel.add(botonAgrandar);
-        botonPanel.add(botonRotar);;
-
-        getContentPane().setLayout(new BorderLayout());
-        getContentPane().add(panel, BorderLayout.CENTER);
-        getContentPane().add(botonPanel, BorderLayout.SOUTH);
-
-        setLocationRelativeTo(null);
-        setVisible(true);
-    }*/
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -132,7 +45,10 @@ public class MiniCAD extends JFrame {
         JButton botonAchicar = new JButton("Reducir Figura");
         JButton botonRotar = new JButton("Rotar Figura");
         JButton botonUnion = new JButton("Crear Figura");
-        JButton botonTransladar = new JButton("Trasladar Figura");
+        JButton botonTransladarIzquierda = new JButton("Trasladar Figura ←");
+        JButton botonTransladarDerecha = new JButton("Trasladar Figura →");
+        JButton botonTransladarArriba = new JButton("Trasladar Figura ↑");
+        JButton botonTransladarAbajo = new JButton("Trasladar Figura ↓");
 
         botonAgrandar.addActionListener(e -> {
             agrandarFigura();
@@ -155,8 +71,20 @@ public class MiniCAD extends JFrame {
             panel.repaint();
         });
 
-        botonTransladar.addActionListener(e -> {
-            trasladarFigura();
+        botonTransladarIzquierda.addActionListener(e -> {
+            trasladarFiguraIzquierda();
+            panel.repaint();
+        });
+        botonTransladarDerecha.addActionListener(e -> {
+            trasladarFiguraDerecha();
+            panel.repaint();
+        });
+        botonTransladarArriba.addActionListener(e -> {
+            trasladarFiguraArriba();
+            panel.repaint();
+        });
+        botonTransladarAbajo.addActionListener(e -> {
+            trasladarFiguraAbajo();
             panel.repaint();
         });
 
@@ -165,7 +93,10 @@ public class MiniCAD extends JFrame {
         botonPanel.add(botonAchicar);
         botonPanel.add(botonAgrandar);
         botonPanel.add(botonRotar);
-        botonPanel.add(botonTransladar);
+        botonPanel.add(botonTransladarIzquierda);
+        botonPanel.add(botonTransladarDerecha);
+        botonPanel.add(botonTransladarArriba);
+        botonPanel.add(botonTransladarAbajo);
 
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(panel, BorderLayout.CENTER);
@@ -175,17 +106,67 @@ public class MiniCAD extends JFrame {
         setVisible(true);
     }
 
-    private void trasladarFigura() {
+    private void trasladarFiguraIzquierda() {
         conexiones.clear();
-        int desplazamientoX = 10; // Puedes ajustar el desplazamiento según tus necesidades
-        int desplazamientoY = 10;
+        int desplazamientoX = -10; // Puedes ajustar el desplazamiento según tus necesidades
+        //int desplazamientoY = 10;
 
         traslacionX += desplazamientoX;
-        traslacionY += desplazamientoY;
+        //traslacionY += desplazamientoY;
 
         // Actualiza las posiciones de los nodos
         for (Node nodo : nodos) {
             nodo.x += desplazamientoX;
+           // nodo.y += desplazamientoY;
+        }
+
+        conectarNodos();
+    }
+    private void trasladarFiguraDerecha() {
+        conexiones.clear();
+        int desplazamientoX = 10; // Puedes ajustar el desplazamiento según tus necesidades
+        //int desplazamientoY = 10;
+
+        traslacionX += desplazamientoX;
+        //traslacionY += desplazamientoY;
+
+        // Actualiza las posiciones de los nodos
+        for (Node nodo : nodos) {
+            nodo.x += desplazamientoX;
+            // nodo.y += desplazamientoY;
+        }
+
+        conectarNodos();
+    }
+
+    private void trasladarFiguraArriba() {
+        conexiones.clear();
+        //int desplazamientoX = 10; // Puedes ajustar el desplazamiento según tus necesidades
+        int desplazamientoY = -10;
+
+        //traslacionX += desplazamientoX;
+        traslacionY += desplazamientoY;
+
+        // Actualiza las posiciones de los nodos
+        for (Node nodo : nodos) {
+            //nodo.x += desplazamientoX;
+            nodo.y += desplazamientoY;
+        }
+
+        conectarNodos();
+    }
+
+    private void trasladarFiguraAbajo() {
+        conexiones.clear();
+        //int desplazamientoX = 10; // Puedes ajustar el desplazamiento según tus necesidades
+        int desplazamientoY = 10;
+
+        //traslacionX += desplazamientoX;
+        traslacionY += desplazamientoY;
+
+        // Actualiza las posiciones de los nodos
+        for (Node nodo : nodos) {
+            //nodo.x += desplazamientoX;
             nodo.y += desplazamientoY;
         }
 
